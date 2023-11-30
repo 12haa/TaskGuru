@@ -16,7 +16,7 @@ const GlobalStyles = styled.div`
   display: flex;
   gap: 2.5rem;
   height: 100%;
-  flex-direction: row
+  flex-direction: row;
 
 `
 export default GlobalStylesProvider
