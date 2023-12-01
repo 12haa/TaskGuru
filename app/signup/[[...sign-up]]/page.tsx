@@ -1,7 +1,10 @@
 "use client";
+// @ts-ignore
 import React from "react";
-import { SignUp } from "@clerk/nextjs";
+// @ts-ignore
+import {SignUp} from "@clerk/nextjs";
 
+// @ts-ignore
 function Page() {
   return (
     <div className="flex items-center justify-center h-full">
@@ -10,4 +13,6 @@ function Page() {
   );
 }
 
+// TODO 1:36:50
+// @ts-ignore
 export default Page;
