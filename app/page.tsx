@@ -2,5 +2,9 @@
 import Tasks from "@/app/components/Tasks/Tasks";
 
 export default function Home() {
-  return <Tasks />;
+  return (
+    <>
+      <Tasks />
+    </>
+  );
 }
