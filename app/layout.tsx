@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import { auth, ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Sidebar from "@/app/components/Sidebar/Sidebar";
@@ -7,7 +7,10 @@ import GlobalStylesProvider from "@/app/providers/GlobalStylesProvider";
 import ContextProvider from "@/app/providers/ContextProvider";
 import React from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+const nunito = Nunito({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "TaskGuru",
@@ -32,7 +35,7 @@ export default function RootLayout({
             referrerPolicy="no-referrer"
           />
         </head>
-        <body className={inter.className}>
+        <body className={nunito.className}>
           <ContextProvider>
             <GlobalStylesProvider>
               {userId && <Sidebar />}

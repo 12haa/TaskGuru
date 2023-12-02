@@ -1,65 +1,73 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
-import {useGlobalState} from "@/app/context/globalContextProvider";
+import { useGlobalState } from "@/app/context/globalContextProvider";
 import Image from "next/image";
 import menu from "@/app/utils/menu";
 import Link from "next/link";
-import {usePathname, useRouter} from "next/navigation";
-import {useClerk} from "@clerk/clerk-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useClerk } from "@clerk/clerk-react";
+import Button from "@/app/components/Button/Button";
+import { logout } from "@/app/utils/icons";
 // TODO 56:19
 
-
 const Sidebar = () => {
-    const {theme} = useGlobalState();
-    const navigate = useRouter();
-    const {signOut} = useClerk()
-    const pathname: string = usePathname();
-    const handleClick = (link: string) => {
-        navigate.push(link);
-    };
-    //  Logout Button
-    const handleLogout = async () => {
-        try {
-            await signOut();
-            window.location.href = "/sign-in";
-        } catch (e) {
-            console.log(e)
-
-        }
+  const { theme } = useGlobalState();
+  const navigate = useRouter();
+  const { signOut } = useClerk();
+  const pathname: string = usePathname();
+  const handleClick = (link: string) => {
+    navigate.push(link);
+  };
+  //  Logout Button
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      location.reload();
+      window.location.href = "/signin";
+    } catch (e) {
+      console.log(e);
     }
+  };
 
-
-    return (
-        <SidebarStyled theme={theme}>
-            <div className="profile">
-                <div className="profile-overlay"></div>
-                <div className="image">
-                    <Image width={70} height={70} alt="profile" src="/avatar1.png"/>
-                </div>
-                <h1>
-                    <span>Mohamad</span>
-                    <span>Khaefi</span>
-                </h1>
-            </div>
-            <ul className="nav-items">
-                {menu.map((item) => (
-                    <li
-                        key={item.id}
-                        onClick={() => handleClick(item.link)}
-                        className={`nav-item ${pathname === item.link ? "active" : ""}`}
-                    >
-                        {item.icon}
-                        <Link href={item.link}>{item.title}</Link>
-                    </li>
-                ))}
-
-            </ul>
-            <div className="flex items-center justify-center ">
-                <button onClick={handleLogout}>Logout</button>
-            </div>
-        </SidebarStyled>
-    );
+  return (
+    <SidebarStyled theme={theme}>
+      <div className="profile">
+        <div className="profile-overlay"></div>
+        <div className="image">
+          <Image width={70} height={70} alt="profile" src="/avatar1.png" />
+        </div>
+        <h1>
+          <span>Mohamad</span>
+          <span>Khaefi</span>
+        </h1>
+      </div>
+      <ul className="nav-items">
+        {menu.map((item) => (
+          <li
+            key={item.id}
+            onClick={() => handleClick(item.link)}
+            className={`nav-item ${pathname === item.link ? "active" : ""}`}
+          >
+            {item.icon}
+            <Link href={item.link}>{item.title}</Link>
+          </li>
+        ))}
+      </ul>
+      <div className="sign-out relative mb-2 flex items-center justify-center">
+        <Button
+          click={handleLogout}
+          name="Sign Out"
+          type="submit"
+          padding="0.5rem 1rem"
+          borderRad="0.5rem"
+          fw="500"
+          fs="1rem"
+          icon={logout}
+        />
+      </div>
+    </SidebarStyled>
+  );
 };
 
 const SidebarStyled = styled.nav<{ collapsed: boolean }>`
@@ -82,7 +90,7 @@ const SidebarStyled = styled.nav<{ collapsed: boolean }>`
 
     transition: all 0.3s cubic-bezier(0.53, 0.21, 0, 1);
     transform: ${(props) =>
-            props.collapsed ? "translateX(-107%)" : "translateX(0)"};
+      props.collapsed ? "translateX(-107%)" : "translateX(0)"};
 
     .toggle-nav {
       display: block !important;
