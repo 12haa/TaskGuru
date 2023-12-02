@@ -5,22 +5,38 @@ import { useGlobalState } from "@/app/context/globalContextProvider";
 import CreateContent from "@/app/components/Modals/CreateContent";
 import TaskItem from "@/app/components/TaskItem/TaskItem";
 import { plus } from "@/app/utils/icons";
+import Typewriter from "typewriter-effect";
 
 interface Props {
   title: string;
   tasks: any[];
 }
+
 const Tasks = ({ title, tasks }: Props) => {
-  const { theme } = useGlobalState();
+  const { theme, isLoading } = useGlobalState();
 
   return (
     <TasksStyled theme={theme}>
+      <CreateContent />
       <h1>{title}</h1>
-      <div className="tasks grid">
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={{ ...task }} />
-        ))}
-      </div>
+      {!isLoading ? (
+        <div className="tasks grid">
+          {tasks.map((task) => (
+            <TaskItem key={task.id} task={{ ...task }} />
+          ))}
+        </div>
+      ) : (
+        <div className=" flex gap-2 flex-col-reverse items-center max-w-full justify-center p-10">
+          <Typewriter
+            options={{
+              strings: ["Loading Tasks"],
+              autoStart: true,
+              loop: true,
+            }}
+          />
+          <span className="loader"></span>
+        </div>
+      )}
 
       {/*<CreateContent />*/}
       <button className="create-task">{plus}Add New Task</button>

@@ -6,6 +6,7 @@ import Sidebar from "@/app/components/Sidebar/Sidebar";
 import GlobalStylesProvider from "@/app/providers/GlobalStylesProvider";
 import ContextProvider from "@/app/providers/ContextProvider";
 import React from "react";
+import NextTopLoader from "nextjs-toploader";
 
 const nunito = Nunito({
   weight: ["400", "500", "600", "700", "800"],
@@ -36,6 +37,12 @@ export default function RootLayout({
           />
         </head>
         <body className={nunito.className}>
+          <NextTopLoader
+            height={2}
+            color="#27ae60"
+            easing="cubic-bezier(0.4, 0, 22.2, 1)"
+            // showSpinner={false}
+          />
           <ContextProvider>
             <GlobalStylesProvider>
               {userId && <Sidebar />}

@@ -38,7 +38,9 @@ export async function POST(req: Request) {
         userId,
       },
     });
+
     console.log("Task created successfully", task);
+
     console.log(title, description, date, completed, important, "im DATA2");
 
     return NextResponse.json(task);

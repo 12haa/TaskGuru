@@ -1,10 +1,12 @@
 "use client";
-
-import React, { useState } from "react";
+// TODO 1:47:52
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useGlobalState } from "@/app/context/globalContextProvider";
 
 const CreateContent = () => {
+  const { allTasks } = useGlobalState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -53,8 +55,7 @@ const CreateContent = () => {
       toast.error("Something went wrong");
       console.log(error);
     }
-
-    console.log(title, description, date, completed, important);
+    allTasks().then(() => console.log(" "));
   };
 
   return (

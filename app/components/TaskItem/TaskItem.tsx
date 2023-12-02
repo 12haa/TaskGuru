@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
+// @ts-ignore
 import { edit, trash } from "@/app/utils/icons";
 import { styled } from "styled-components";
 import { useGlobalState } from "@/app/context/globalContextProvider";
 import formatDate from "@/app/utils/formatDate";
+import CreateContent from "@/app/components/Modals/CreateContent";
 
 interface Props {
   task: {
@@ -17,8 +19,8 @@ interface Props {
 }
 
 const TaskItem = ({ task }: Props) => {
-  const { theme } = useGlobalState();
-  const { title, date, isCompleted, important, description } = task;
+  const { theme, deleteTask } = useGlobalState();
+  const { id, title, date, isCompleted, important, description } = task;
   return (
     <TaskItemStyled theme={theme}>
       <h1>{title}</h1>
@@ -31,7 +33,9 @@ const TaskItem = ({ task }: Props) => {
           <button className="incomplete">Incomplete</button>
         )}
         <button className="edit">{edit}</button>
-        <button className="delete">{trash}</button>
+        <button className="delete" onClick={() => deleteTask(id)}>
+          {trash}
+        </button>
       </div>
     </TaskItemStyled>
   );
