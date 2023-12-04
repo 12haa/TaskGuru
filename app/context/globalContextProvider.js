@@ -14,6 +14,14 @@ export const GlobalProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const theme = themes[selectedTheme];
   const [tasks, setTasks] = useState([]);
+  const [modal, setModal] = useState(false);
+
+  const openModal = () => {
+    setModal(true);
+  };
+  const closeModal = () => {
+    setModal(false);
+  };
 
   // GET User
   const { user } = useUser();
@@ -64,7 +72,7 @@ export const GlobalProvider = ({ children }) => {
       toast.error("Something went wrong");
     }
   };
-  const completedTasks = tasks.filter((tasks) => tasks.isCompleted === true);
+  const completedTasks = tasks?.filter((tasks) => tasks.isCompleted === true);
   const importantTasks = tasks.filter((tasks) => tasks.isImportant === true);
   const incompleteTasks = tasks.filter((tasks) => tasks.isCompleted === false);
 
@@ -80,6 +88,9 @@ export const GlobalProvider = ({ children }) => {
         importantTasks,
         incompleteTasks,
         updateTask,
+        modal,
+        openModal,
+        closeModal,
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>

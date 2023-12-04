@@ -7,6 +7,8 @@ import TaskItem from "@/app/components/TaskItem/TaskItem";
 // @ts-ignore
 import { plus } from "@/app/utils/icons";
 import Typewriter from "typewriter-effect";
+import modal from "@/app/components/Modals/Modal";
+import Modal from "@/app/components/Modals/Modal";
 
 interface Props {
   title: string;
@@ -14,10 +16,11 @@ interface Props {
 }
 
 const Tasks = ({ title, tasks }: Props) => {
-  const { theme, isLoading } = useGlobalState();
+  const { theme, isLoading, openModal, modal } = useGlobalState();
 
   return (
     <TasksStyled theme={theme}>
+      {modal && <Modal content={<CreateContent />} />}
       <h1>{title}</h1>
       {!isLoading ? (
         <div className="tasks grid">
@@ -38,7 +41,10 @@ const Tasks = ({ title, tasks }: Props) => {
         </div>
       )}
 
-      <button className="create-task">{plus}Add New Task</button>
+      <button className="create-task" onClick={openModal}>
+        {" "}
+        {plus}Add New Task
+      </button>
     </TasksStyled>
   );
 };
