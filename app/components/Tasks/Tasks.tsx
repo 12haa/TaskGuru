@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useGlobalState } from "@/app/context/globalContextProvider";
 import CreateContent from "@/app/components/Modals/CreateContent";
 import TaskItem from "@/app/components/TaskItem/TaskItem";
+// @ts-ignore
 import { plus } from "@/app/utils/icons";
 import Typewriter from "typewriter-effect";
 
@@ -17,7 +18,6 @@ const Tasks = ({ title, tasks }: Props) => {
 
   return (
     <TasksStyled theme={theme}>
-      <CreateContent />
       <h1>{title}</h1>
       {!isLoading ? (
         <div className="tasks grid">
@@ -38,7 +38,6 @@ const Tasks = ({ title, tasks }: Props) => {
         </div>
       )}
 
-      {/*<CreateContent />*/}
       <button className="create-task">{plus}Add New Task</button>
     </TasksStyled>
   );

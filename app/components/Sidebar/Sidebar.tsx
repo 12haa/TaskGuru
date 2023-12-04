@@ -9,13 +9,19 @@ import { usePathname, useRouter } from "next/navigation";
 import { useClerk } from "@clerk/clerk-react";
 import Button from "@/app/components/Button/Button";
 import { logout } from "@/app/utils/icons";
-// TODO 56:19
+import { UserButton, useUser } from "@clerk/nextjs";
 
 const Sidebar = () => {
   const { theme } = useGlobalState();
   const navigate = useRouter();
   const { signOut } = useClerk();
   const pathname: string = usePathname();
+  const { user } = useUser();
+  const { firstName, lastName, imageUrl } = user || {
+    firstName: "",
+    lastName: "",
+    imageUrl: "",
+  };
   const handleClick = (link: string) => {
     navigate.push(link);
   };
@@ -34,12 +40,15 @@ const Sidebar = () => {
     <SidebarStyled theme={theme}>
       <div className="profile">
         <div className="profile-overlay"></div>
-        <div className="image">
-          <Image width={70} height={70} alt="profile" src="/avatar1.png" />
+        <div className="image flex items-center justify-center">
+          <Image width={60} height={60} alt="profile" src={imageUrl} />
         </div>
-        <h1>
-          <span>Mohamad</span>
-          <span>Khaefi</span>
+        <div className="user-btn absolute z-20 top-0 w-full h-full">
+          <UserButton />
+        </div>
+        <h1 className=" capitalize  ">
+          <span className="text-[18px]">{firstName}</span>
+          <span className="text-[18px]">{lastName}</span>
         </h1>
       </div>
       <ul className="nav-items">
@@ -70,7 +79,9 @@ const Sidebar = () => {
   );
 };
 
-const SidebarStyled = styled.nav<{ collapsed: boolean }>`
+const SidebarStyled = styled.nav<{
+  collapsed: boolean;
+}>`
   position: relative;
   width: ${(props) => props.theme.sidebarWidth};
   background-color: ${(props) => props.theme.colorBg2};
