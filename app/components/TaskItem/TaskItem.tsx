@@ -28,9 +28,11 @@ const TaskItem = ({ task }: Props) => {
   }
   return (
     <TaskItemStyled theme={theme}>
-      <h1>{title}</h1>
-      <p>{description}</p>
-      <p className="date">{formatDate(date)}</p>
+      <div className=" flex  flex-col gap-2 p-4 w-full h-full">
+        <h1>{title}</h1>
+        <p>{description}</p>
+        <p className="date">{formatDate(date)}</p>
+      </div>
       <div className="task-footer">
         {isCompleted ? (
           <button
@@ -78,6 +80,12 @@ const TaskItemStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  @media only screen and (max-width < 768px) {
+    border: 4px solid black;
+    width: 100%;
+
+    flex-direction: column;
+  }
 
   .date {
     margin-top: auto;

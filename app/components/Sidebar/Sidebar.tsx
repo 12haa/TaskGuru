@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useGlobalState } from "@/app/context/globalContextProvider";
 import Image from "next/image";
@@ -8,11 +8,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useClerk } from "@clerk/clerk-react";
 import Button from "@/app/components/Button/Button";
-import { logout } from "@/app/utils/icons";
+// @ts-ignore
+import { arrowLeft, bars, logout } from "@/app/utils/icons";
 import { UserButton, useUser } from "@clerk/nextjs";
+import { isWindowDefined } from "swr/_internal";
 
 const Sidebar = () => {
-  const { theme } = useGlobalState();
+  const { theme, collapsed, collapseMenu } = useGlobalState();
   const navigate = useRouter();
   const { signOut } = useClerk();
   const pathname: string = usePathname();
@@ -22,6 +24,8 @@ const Sidebar = () => {
     lastName: "",
     imageUrl: "",
   };
+  const [isMobile, setIsMobile] = useState(false);
+  const windowSize = window.innerWidth;
   const handleClick = (link: string) => {
     navigate.push(link);
   };
@@ -37,7 +41,11 @@ const Sidebar = () => {
   };
 
   return (
-    <SidebarStyled theme={theme}>
+    <SidebarStyled theme={theme} collapsed={collapsed}>
+      <button className="toggle-nav" onClick={collapseMenu}>
+        {collapsed ? bars : arrowLeft}
+      </button>
+
       <div className="profile">
         <div className="profile-overlay"></div>
         <div className="image flex items-center justify-center">
@@ -63,6 +71,7 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
+
       <div className="sign-out relative mb-2 flex items-center justify-center">
         <Button
           click={handleLogout}
@@ -247,7 +256,7 @@ const SidebarStyled = styled.nav<{
       content: "";
       right: 0;
       top: 0;
-      width: 0%;
+      width: 0;
       height: 100%;
       background-color: ${(props) => props.theme.colorGreenDark};
 

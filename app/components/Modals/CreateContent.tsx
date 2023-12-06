@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useGlobalState } from "@/app/context/globalContextProvider";
 import { styled } from "styled-components";
 import Button from "@/app/components/Button/Button";
+// @ts-ignore
 import { plus } from "@/app/utils/icons";
 import { Simulate } from "react-dom/test-utils";
 import resize = Simulate.resize;
@@ -101,7 +102,7 @@ const CreateContent = () => {
           onChange={handleChange("date")}
         />
       </div>
-      <div className="input-control">
+      <div className="input-control toggler">
         <label htmlFor="completed">Completed</label>
         <input
           type="checkbox"
@@ -111,7 +112,7 @@ const CreateContent = () => {
           onChange={handleChange("completed")}
         />
       </div>
-      <div className="input-control">
+      <div className="input-control toggler">
         <label htmlFor="important">Important</label>
         <input
           type="checkbox"
